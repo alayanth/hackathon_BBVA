@@ -1,0 +1,48 @@
+Crear la tabla en SQL
+
+CREATE TABLE producto(
+	id_producto INT AUTO_INCREMENT,
+	nombre_producto VARCHAR(50) NOT NULL,
+	precio FLOAT NOT NULL,
+	marca varchar(60) NOT NULL DEFAULT 'Genérico',
+	PRIMARY KEY(id_producto)
+) ENGINE=INNODB;
+
+
+#!/usr/bin/python
+import mysql.connector as mariadb
+
+mariadb_connection = mariadb.connect(user='yujupay',host='10.241.176.200', password='12qwasZX!"', database='inventario_yujupay')
+cursor = mariadb_connection.cursor()
+
+#retrieving information
+nombre_producto = 'gansito'
+data = cursor.execute("SELECT id_producto,nombre_producto,precio,marca FROM producto WHERE nombre_producto=%s", (nombre_producto,))
+
+for id_producto,nombre_producto,precio,marca in cursor:
+    print("id_producto: {} nombre_producto: {} precio: {} marca: {}").format(id_producto,nombre_producto,precio,marca)
+
+
+mariadb_connection.close()
+
+
+
+#insert information
+try:
+    cursor.execute("INSERT INTO employees (first_name,last_name) VALUES (%s,%s)", ('Maria','DB'))
+except mariadb.Error as error:
+    print("Error: {}".format(error))
+
+mariadb_connection.commit()
+print "The last inserted id was: ", cursor.lastrowid
+
+
+
+
+
+Requerimientos
+
+mostrar Todo el inventario
+Modificar un producto inventario
+insertar un producto al inventario
+borrar un producto del inventario
